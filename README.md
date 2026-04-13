@@ -17,7 +17,7 @@ Move Right: Right Arrow
 Rotate: Up Arrow
 Accelerates Drop: Down Arrow
 Instantly Drop: Spacebar
-Pause: P
+Pause / UnPause: P
 4. Scoring System
 Points are awarded based on the number of lines cleared simultaneously:
 - 1 Line = 100 points

@@ -1,4 +1,4 @@
-## Tetris like game
+## Tetris-like game
 
 # Game Rules
 1. Objective

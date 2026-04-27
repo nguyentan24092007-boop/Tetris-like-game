@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.*;
 
 public class Tetromino {
     private int[][] shape;
@@ -20,6 +21,31 @@ public class Tetromino {
     //move the tetro
     public void move(int x, int y) {
         this.Sx += x;
-        this.Sy -= y;
+        this.Sy += y;
+    }
+    //random shape
+    public static Tetromino randomShape() {
+        int[][][] allShape = {
+            {{1,1},{1,1}},
+            {{1,1,1,1}},
+            {{0,1,0},{1,1,1}},
+            {{1,1,0},{0,1,1}},
+            {{0,1,1},{1,1,0}},
+            {{1,0,0},{1,1,1}},
+            {{0,0,1},{1,1,1}}
+        };
+        Color[] allColor = {
+            Color.CYAN,
+            Color.RED,
+            Color.ORANGE,
+            Color.YELLOW,
+            Color.BLUE,
+            Color.PINK,
+            Color.GREEN
+        };
+        Random random = new Random();
+        int roller = random.nextInt(7);
+
+        return new Tetromino(allShape[roller], allColor[roller]);
     }
 }

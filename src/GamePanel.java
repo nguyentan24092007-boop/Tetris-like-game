@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class GamePanel extends JPanel implements Runnable {
     public static final int WIDTH=1020;
@@ -11,13 +12,43 @@ public class GamePanel extends JPanel implements Runnable {
     private Board board;
     public static int blockSize = 30;
     private Tetromino tetromino;
-
+    private int fallCount = 0;
 
     public GamePanel(){
         this.setBackground(Color.BLACK);
         this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
         this.setLayout(null);
 
+        //keyboard input
+        this.setFocusable(true);
+        this.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if(tetromino == null || board == null) {
+                    return;
+                }
+                int x = tetromino.getX();
+                int y = tetromino.getY();
+
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_LEFT:
+                        if(board.valid(tetromino, x-1, y)) 
+                            tetromino.move(-1, 0); {
+                        break;
+                    }
+                    case KeyEvent.VK_RIGHT:
+                        if(board.valid(tetromino, x+1, y))
+                            tetromino.move(1, 0); {
+                        break;
+                    }
+                    case KeyEvent.VK_DOWN:
+                        if(board.valid(tetromino, x, y+1))
+                            tetromino.move(0, 1); {
+                        break; 
+                    }
+                }
+                repaint();
+            }
+        });
     }
     public void launchGame(){
         gameThread = new Thread(this);
@@ -50,6 +81,21 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
     public void update(){
+        if(tetromino != null && board != null) {
+            fallCount++;  //time counting to fall 
+
+            if(fallCount >= 30) { //reduce to move faster and vice versa 
+                if(board.valid(tetromino, tetromino.getX(), tetromino.getY() + 1)) { //asking if the next move valid
+                    tetromino.move(0, 1);
+                }
+                else {
+                    //test chay lien tuc, xoa sau
+                    int[][] blueShape = {{1,1},{1,1}};
+                    this.tetromino = new Tetromino(blueShape, Color.BLUE);
+                }
+                fallCount = 0;
+            }
+        }
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);

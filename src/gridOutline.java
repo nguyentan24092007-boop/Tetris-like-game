@@ -1,15 +1,15 @@
 import java.awt.*;
 
-public class gridOutline {
-    final int WIDTH = 400;
+public class GridOutline {
+    final int WIDTH = 300;
     final int HEIGHT = 600;
     public static int left_x;
     public static int right_x;
     public static int top_y;
     public static int bottom_y;
 
-    public gridOutline() {
-        left_x = (GamePanel.WIDTH / 2) - (WIDTH / 2);
+    public GridOutline() {
+        left_x = 100;
         right_x = left_x + WIDTH;
         top_y = 50;
         bottom_y = top_y + HEIGHT;

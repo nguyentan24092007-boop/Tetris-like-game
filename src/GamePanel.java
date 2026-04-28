@@ -7,12 +7,11 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int HEIGHT=720;
     final int FPS = 60;
     Thread gameThread;
-
-
     private Board board;
     public static int blockSize = 30;
     private Tetromino tetromino;
     private int fallCount = 0;
+    private GridOutline playArea;
 
     public GamePanel(){
         this.setBackground(Color.BLACK);
@@ -54,10 +53,10 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread = new Thread(this);
         gameThread.start();
 
-        //cai nay de thu, se xoa sau
         this.board = new Board();
-        int blueSquare[][] = { {1,1},{1,1}} ;
-        this.tetromino = new Tetromino(blueSquare, Color.BLUE);
+        this.tetromino = Tetromino.randomShape();
+        this.playArea = new GridOutline();
+
 
     }
     @Override
@@ -99,28 +98,43 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 
+        Graphics2D g2 = (Graphics2D) g;
+        if(playArea != null) {
+            playArea.draw(g2);
+        }
+
+        g2.setColor(new Color(50, 50, 50));
+        for(int i = 0; i < Board.column; i++) {
+            for(int j = 0; j < Board.row; j++) {
+                int x = GridOutline.left_x + (i * blockSize);
+                int y = GridOutline.top_y + (j * blockSize);
+                g2.drawRect(x, y, blockSize, blockSize);
+            }
+        }
         if(board != null) {
             Block[][] current = board.getGrid();
             
             for(int i = 0; i < Board.column; i++) {
                 for(int j = 0; j< Board.row; j++) {
                     if(current[i][j].hasPiece()) {
-                        g.setColor(current[i][j].getColor());
-                        g.fillRect(i*blockSize, j*blockSize, blockSize, blockSize);
+                        g2.setColor(current[i][j].getColor());
+                        int x = GridOutline.left_x + (i * blockSize);
+                        int y = GridOutline.top_y + (j * blockSize);
+                        g2.fillRect(x, y, blockSize, blockSize);
                     }
                 }
             }
         }
         if(tetromino != null) {
             int[][] shape = tetromino.getShape();
-            g.setColor(tetromino.getColor());
+            g2.setColor(tetromino.getColor());
 
             for(int i = 0; i < shape.length; i++) {
                 for(int j = 0; j < shape[0].length; j++) {
                     if(shape[i][j] == 1) {
-                        int x = (tetromino.getX() + j)*blockSize;
-                        int y = (tetromino.getY() + i)*blockSize;
-                        g.fillRect (x, y, blockSize, blockSize);
+                        int x = GridOutline.left_x + ((tetromino.getX() + j) * blockSize);
+                        int y = GridOutline.top_y + ((tetromino.getY() + i) * blockSize);
+                        g2.fillRect (x, y, blockSize, blockSize);
                     }
                 }
             }

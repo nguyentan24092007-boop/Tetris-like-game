@@ -37,4 +37,18 @@ public class Board {
         }
         return true;
     }
+    //keep the old block stay down
+    public void pieceLock(Tetromino t) {
+        int[][] shape = t.getShape();
+
+        for(int i = 0; i < shape.length; i++) {
+            for(int j = 0; j < shape[0].length; j++) {
+                if(shape[i][j] == 1) {
+                    int x = t.getX() + j;
+                    int y = t.getY() + i;
+                    grid[x][y].have(t.getColor());
+                }
+            }
+        }
+    }
 }

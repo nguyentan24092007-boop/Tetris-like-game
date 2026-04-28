@@ -89,9 +89,8 @@ public class GamePanel extends JPanel implements Runnable {
                     tetromino.move(0, 1);
                 }
                 else {
-                    //test chay lien tuc, xoa sau
-                    int[][] blueShape = {{1,1},{1,1}};
-                    this.tetromino = new Tetromino(blueShape, Color.BLUE);
+                    board.pieceLock(tetromino);
+                    this.tetromino = Tetromino.randomShape();
                 }
                 fallCount = 0;
             }

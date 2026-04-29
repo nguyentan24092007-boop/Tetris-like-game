@@ -17,6 +17,12 @@ public class GamePanel extends JPanel implements Runnable {
     private int topScore = 0;
     private boolean gameOver = false;
 
+    //add game menu
+    public enum GameState { MENU, PLAYING }
+    private GameState currentState = GameState.MENU;
+    private int menuOption = 0;
+    private int fallSpeed = 30;
+    private String difficulty = "NORMAL";
 
     public GamePanel(){
         this.setBackground(Color.BLACK);
@@ -27,6 +33,38 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
         this.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
+
+                //game menu control
+                if (currentState == GameState.MENU) {
+                    if (e.getKeyCode() == KeyEvent.VK_UP) {
+                        menuOption--;
+                        if (menuOption < 0) menuOption = 2;
+                    } 
+                    else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                        menuOption++;
+                        if (menuOption > 2) menuOption = 0;
+                    } 
+                    else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        if (menuOption == 0) { // Start Game
+                            board = new Board();
+                            tetromino = Tetromino.randomShape();
+                            nextTetromino = Tetromino.randomShape();
+                            score = 0;
+                            fallCount = 0;
+                            gameOver = false;
+                            currentState = GameState.PLAYING;
+                        } else if (menuOption == 1) {
+                            if (fallSpeed == 30) { fallSpeed = 15; difficulty = "HARD"; }
+                            else if (fallSpeed == 15) { fallSpeed = 45; difficulty = "EASY"; }
+                            else { fallSpeed = 30; difficulty = "NORMAL"; }
+                        } else if (menuOption == 2) {
+                            System.exit(0);
+                        }
+                    }
+                    repaint();
+                    return;
+                }
+
                 if(gameOver) {
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                         board = new Board();
@@ -35,8 +73,12 @@ public class GamePanel extends JPanel implements Runnable {
                         score = 0;
                         fallCount = 0;
                         gameOver = false;
-                        repaint();
+                        currentState = GameState.PLAYING;
                     }
+                    else if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                        currentState = GameState.MENU;
+                    }
+                    repaint();
                 }
                 if(tetromino == null || board == null) {
                     return;
@@ -111,6 +153,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
     public void update(){
+        if(currentState == GameState.MENU) {
+            return;
+        }
         if(gameOver) {
             return;
         }
@@ -147,6 +192,21 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
+
+        //game menu
+        if (currentState == GameState.MENU) {
+            g2.setColor(Color.WHITE);
+            g2.setFont(new Font("Arial", Font.BOLD, 60));
+            g2.drawString("SIMPLE TETRIS", WIDTH / 2 - 200, 200);
+
+            g2.setFont(new Font("Arial", Font.BOLD, 30));
+            g2.drawString(">" , WIDTH / 2 - 150, 350 + (menuOption * 70));
+            g2.drawString("START GAME", WIDTH / 2 - 100, 350);
+            g2.drawString("DIFFICULTY:  " + difficulty, WIDTH / 2 - 100, 420);
+            g2.drawString("QUIT", WIDTH / 2 - 100, 490);
+            return; // Skip drawing the rest of the game board!
+        }
+
         if(playArea != null) {
             playArea.draw(g2);
         }
@@ -205,10 +265,11 @@ public class GamePanel extends JPanel implements Runnable {
             g2.setFont(new Font("Arial", Font.BOLD, 45));
             g2.drawString("GAME OVER", GridOutline.left_x + 12, GridOutline.top_y +300);
 
-            //press enter to retry
+            //press enter to retry and esc for menu
             g2.setColor(Color.YELLOW);
             g2.setFont(new Font("Arial", Font.BOLD, 50));
-            g2.drawString("Press ENTER to retry", 1020/4+5, GridOutline.top_y -20);
+            g2.drawString("Press ENTER to retry or ESC for menu", 45, GridOutline.top_y -20);
+
         }
         
         //display next tetromino

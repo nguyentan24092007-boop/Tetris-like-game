@@ -14,6 +14,7 @@ public class GamePanel extends JPanel implements Runnable {
     private int fallCount = 0;
     private GridOutline playArea;
     private int score = 0;
+    private int topScore = 0;
     private boolean gameOver = false;
 
 
@@ -121,6 +122,10 @@ public class GamePanel extends JPanel implements Runnable {
                     int line = board.clearLine();
                     if(line > 0) {
                         score += (line*100);
+
+                        if(score > topScore) {
+                            topScore = score;
+                        }
                     }
                     if(!board.valid(tetromino, tetromino.getX(), tetromino.getY())) {
                         gameOver = true;
@@ -178,6 +183,10 @@ public class GamePanel extends JPanel implements Runnable {
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 30));
         g2.drawString("SCORE: " + score, 650, 200);
+
+        g2.setColor(Color.WHITE);
+        g2.setFont(new Font("Ariel", Font.BOLD, 30));
+        g2.drawString("TOP SCORE: "+ topScore, 650, 300);
 
         //game over display
         if(gameOver) {

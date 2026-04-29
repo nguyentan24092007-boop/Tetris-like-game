@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class GamePanel extends JPanel implements Runnable {
-    public static final int WIDTH=1020;
+    public static final int WIDTH=1000;
     public static final int HEIGHT=720;
     final int FPS = 60;
     Thread gameThread;

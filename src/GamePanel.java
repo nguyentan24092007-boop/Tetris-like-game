@@ -190,11 +190,19 @@ public class GamePanel extends JPanel implements Runnable {
 
         //game over display
         if(gameOver) {
-            g2.setColor(Color.RED);
-            g2.setFont(new Font("Arial", Font.BOLD, 50));
-            g2.drawString("GAME OVER", GridOutline.left_x - 2, GridOutline.top_y - 15);
-        }
+            g2.setColor(new Color(0,0, 0,180));
+            g2.fillRect(GridOutline.left_x, GridOutline.top_y, 300, 600);
 
+            g2.setColor(Color.RED);
+            g2.setFont(new Font("Arial", Font.BOLD, 45));
+            g2.drawString("GAME OVER", GridOutline.left_x + 12, GridOutline.top_y +300);
+
+            //press enter to retry
+            g2.setColor(Color.YELLOW);
+            g2.setFont(new Font("Arial", Font.BOLD, 50));
+            g2.drawString("Press ENTER to retry", 1020/4+5, GridOutline.top_y -20);
+        }
+        
         //display next tetromino
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 30));

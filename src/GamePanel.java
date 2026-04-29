@@ -37,29 +37,35 @@ public class GamePanel extends JPanel implements Runnable {
 
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_LEFT:
-                        if(board.valid(tetromino, x-1, y)) 
-                            tetromino.move(-1, 0); {
+                        if(board.valid(tetromino, x-1, y)) {
+                            tetromino.move(-1, 0);
+                        }
                         break;
-                    }
                     case KeyEvent.VK_RIGHT:
-                        if(board.valid(tetromino, x+1, y))
-                            tetromino.move(1, 0); {
+                        if(board.valid(tetromino, x+1, y)) {
+                            tetromino.move(1, 0);
+                        }
                         break;
-                    }
                     case KeyEvent.VK_DOWN:
-                        if(board.valid(tetromino, x, y+1))
-                            tetromino.move(0, 1); {
-                        break; 
-                    }
+                        if(board.valid(tetromino, x, y+1)) {
+                            tetromino.move(0, 1);
+                        }
+                        break;
                     case KeyEvent.VK_UP:
-                    int[][] nextShape = tetromino.rotateShape();
-                    int[][] currentShape = tetromino.getShape();
+                        int[][] nextShape = tetromino.rotateShape();
+                        int[][] currentShape = tetromino.getShape();
 
-                    tetromino.setShape(nextShape);
-                    if(!board.valid(tetromino, x, y)) {
-                        tetromino.setShape(currentShape); 
-                    }
-                    break;
+                        tetromino.setShape(nextShape);
+                        if(!board.valid(tetromino, x, y)) {
+                            tetromino.setShape(currentShape);
+                        }
+                        break;
+                    case KeyEvent.VK_SPACE:  //instant drop
+                        while(board.valid(tetromino, tetromino.getX(), tetromino.getY() + 1)) {
+                            tetromino.move(0, 1);
+                        }
+                        fallCount = 30; 
+                        break;
                 }
                 repaint();
             }
@@ -149,7 +155,7 @@ public class GamePanel extends JPanel implements Runnable {
                         g2.setColor(current[i][j].getColor());
                         int x = GridOutline.left_x + (i * blockSize);
                         int y = GridOutline.top_y + (j * blockSize);
-                        g2.fillRect(x, y, blockSize, blockSize);
+                        g2.fill3DRect(x, y, blockSize, blockSize, true);
                     }
                 }
             }
@@ -163,7 +169,7 @@ public class GamePanel extends JPanel implements Runnable {
                     if(shape[i][j] == 1) {
                         int x = GridOutline.left_x + ((tetromino.getX() + j) * blockSize);
                         int y = GridOutline.top_y + ((tetromino.getY() + i) * blockSize);
-                        g2.fillRect (x, y, blockSize, blockSize);
+                        g2.fill3DRect(x, y, blockSize, blockSize, true);
                     }
                 }
             }
@@ -193,7 +199,7 @@ public class GamePanel extends JPanel implements Runnable {
                     if(nextShape[i][j] == 1) {
                         int x = 700 + (j*blockSize);
                         int y = 450 + (i*blockSize);
-                        g2.fillRect(x, y, blockSize, blockSize);
+                        g2.fill3DRect(x, y, blockSize, blockSize, true);
                     }
                 }
             }

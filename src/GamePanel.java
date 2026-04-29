@@ -28,6 +28,17 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 if(gameOver) {
+                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        board = new Board();
+                        tetromino = Tetromino.randomShape();
+                        nextTetromino = Tetromino.randomShape();
+                        score = 0;
+                        fallCount = 0;
+                        gameOver = false;
+                        repaint();
+                    }
+                }
+                if(tetromino == null || board == null) {
                     return;
                 }
                 if(tetromino == null || board == null) {

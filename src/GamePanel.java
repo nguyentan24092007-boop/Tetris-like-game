@@ -13,6 +13,7 @@ public class GamePanel extends JPanel implements Runnable {
     private int fallCount = 0;
     private GridOutline playArea;
     private int score = 0;
+    private boolean gameOver = false;
 
     public GamePanel(){
         this.setBackground(Color.BLACK);
@@ -23,6 +24,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
         this.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
+                if(gameOver) {
+                    return;
+                }
                 if(tetromino == null || board == null) {
                     return;
                 }
@@ -89,6 +93,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
     public void update(){
+        if(gameOver) {
+            return;
+        }
         if(tetromino != null && board != null) {
             fallCount++;  //time counting to fall 
 
@@ -100,10 +107,13 @@ public class GamePanel extends JPanel implements Runnable {
                     board.pieceLock(tetromino);
                     this.tetromino = Tetromino.randomShape();
 
-                    //score (havent shown yet, gonna deal with it tomorrow)
+                    //score counting
                     int line = board.clearLine();
                     if(line > 0) {
                         score += (line*100);
+                    }
+                    if(!board.valid(tetromino, tetromino.getX(), tetromino.getY())) {
+                        gameOver = true;
                     }
                 }
                 fallCount = 0;
@@ -158,5 +168,11 @@ public class GamePanel extends JPanel implements Runnable {
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 30));
         g2.drawString("SCORE: " + score, 500, 200);
+        //game over display
+        if(gameOver) {
+            g2.setColor(Color.RED);
+            g2.setFont(new Font("Arial", Font.BOLD, 50));
+            g2.drawString("GAME OVER", GridOutline.left_x - 2, GridOutline.top_y - 15);
+        }
     }
 }

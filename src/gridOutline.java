@@ -9,9 +9,9 @@ public class GridOutline {
     public static int bottom_y;
 
     public GridOutline() {
-        left_x = 100;
+        left_x = 110;
         right_x = left_x + WIDTH;
-        top_y = 50;
+        top_y = 75;
         bottom_y = top_y + HEIGHT;
     }
     public void draw(Graphics2D g2) {

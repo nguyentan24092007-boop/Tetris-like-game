@@ -10,10 +10,12 @@ public class GamePanel extends JPanel implements Runnable {
     private Board board;
     public static int blockSize = 30;
     private Tetromino tetromino;
+    private Tetromino nextTetromino;
     private int fallCount = 0;
     private GridOutline playArea;
     private int score = 0;
     private boolean gameOver = false;
+
 
     public GamePanel(){
         this.setBackground(Color.BLACK);
@@ -69,6 +71,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         this.board = new Board();
         this.tetromino = Tetromino.randomShape();
+        this.nextTetromino = Tetromino.randomShape();
         this.playArea = new GridOutline();
 
     }
@@ -105,7 +108,8 @@ public class GamePanel extends JPanel implements Runnable {
                 }
                 else {
                     board.pieceLock(tetromino);
-                    this.tetromino = Tetromino.randomShape();
+                    this.tetromino = this.nextTetromino;
+                    this.nextTetromino = Tetromino.randomShape();
 
                     //score counting
                     int line = board.clearLine();
@@ -167,12 +171,32 @@ public class GamePanel extends JPanel implements Runnable {
         //score display
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 30));
-        g2.drawString("SCORE: " + score, 500, 200);
+        g2.drawString("SCORE: " + score, 650, 200);
+
         //game over display
         if(gameOver) {
             g2.setColor(Color.RED);
             g2.setFont(new Font("Arial", Font.BOLD, 50));
             g2.drawString("GAME OVER", GridOutline.left_x - 2, GridOutline.top_y - 15);
+        }
+
+        //display next tetromino
+        g2.setColor(Color.WHITE);
+        g2.setFont(new Font("Arial", Font.BOLD, 30));
+        g2.drawString("NEXT SHAPE", 650, 400);
+        if(nextTetromino != null) {
+            int[][] nextShape = nextTetromino.getShape();
+            g2.setColor(Color.GRAY);
+
+            for(int i = 0; i < nextShape.length; i++) {
+                for(int j = 0; j < nextShape[0].length; j++) {
+                    if(nextShape[i][j] == 1) {
+                        int x = 700 + (j*blockSize);
+                        int y = 450 + (i*blockSize);
+                        g2.fillRect(x, y, blockSize, blockSize);
+                    }
+                }
+            }
         }
     }
 }

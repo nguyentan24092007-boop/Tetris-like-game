@@ -197,13 +197,13 @@ public class GamePanel extends JPanel implements Runnable {
         if (currentState == GameState.MENU) {
             g2.setColor(Color.WHITE);
             g2.setFont(new Font("Arial", Font.BOLD, 60));
-            g2.drawString("SIMPLE TETRIS", WIDTH / 2 - 200, 200);
+            g2.drawString("SIMPLE TETRIS", WIDTH / 2 - 250, 200);
 
             g2.setFont(new Font("Arial", Font.BOLD, 30));
-            g2.drawString(">" , WIDTH / 2 - 150, 350 + (menuOption * 70));
-            g2.drawString("START GAME", WIDTH / 2 - 100, 350);
-            g2.drawString("DIFFICULTY:  " + difficulty, WIDTH / 2 - 100, 420);
-            g2.drawString("QUIT", WIDTH / 2 - 100, 490);
+            g2.drawString(">" , WIDTH / 2 - 200, 350 + (menuOption * 70));
+            g2.drawString("START GAME", WIDTH / 2 - 150, 350);
+            g2.drawString("DIFFICULTY:  " + difficulty, WIDTH / 2 - 150, 420);
+            g2.drawString("QUIT", WIDTH / 2 - 150, 490);
             return; // Skip drawing the rest of the game board!
         }
 

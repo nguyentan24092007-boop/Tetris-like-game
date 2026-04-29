@@ -41,9 +41,6 @@ public class GamePanel extends JPanel implements Runnable {
                 if(tetromino == null || board == null) {
                     return;
                 }
-                if(tetromino == null || board == null) {
-                    return;
-                }
                 int x = tetromino.getX();
                 int y = tetromino.getY();
 

@@ -33,95 +33,93 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
         this.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
+                int input = e.getKeyCode();
 
-                //game menu control
-                if (currentState == GameState.MENU) {
-                    if (e.getKeyCode() == KeyEvent.VK_UP) {
-                        menuOption--;
-                        if (menuOption < 0) menuOption = 2;
-                    } 
-                    else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                        menuOption++;
-                        if (menuOption > 2) menuOption = 0;
-                    } 
-                    else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        if (menuOption == 0) { // Start Game
-                            board = new Board();
-                            tetromino = RandomTetromino.randomShape();
-                            nextTetromino = RandomTetromino.randomShape();
-                            score = 0;
-                            fallCount = 0;
-                            gameOver = false;
-                            currentState = GameState.PLAYING;
-                        } else if (menuOption == 1) {
-                            if (fallSpeed == 30) { fallSpeed = 15; difficulty = "HARD"; }
-                            else if (fallSpeed == 15) { fallSpeed = 45; difficulty = "EASY"; }
-                            else { fallSpeed = 30; difficulty = "NORMAL"; }
-                        } else if (menuOption == 2) {
-                            System.exit(0);
-                        }
-                    }
-                    repaint();
-                    return;
+                if (gameOver) {
+                    gameOverInput(input);
                 }
-
-                if(gameOver) {
-                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        board = new Board();
-                        tetromino = RandomTetromino.randomShape();
-                        nextTetromino = RandomTetromino.randomShape();
-                        score = 0;
-                        fallCount = 0;
-                        gameOver = false;
-                        currentState = GameState.PLAYING;
-                    }
-                    else if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                        currentState = GameState.MENU;
-                    }
-                    repaint();
+                else if(currentState == GameState.MENU) {
+                    menuInput(input);
                 }
-                if(tetromino == null || board == null) {
-                    return;
-                }
-                int x = tetromino.getX();
-                int y = tetromino.getY();
-
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_LEFT:
-                        if(board.valid(tetromino, x-1, y)) {
-                            tetromino.move(-1, 0);
-                        }
-                        break;
-                    case KeyEvent.VK_RIGHT:
-                        if(board.valid(tetromino, x+1, y)) {
-                            tetromino.move(1, 0);
-                        }
-                        break;
-                    case KeyEvent.VK_DOWN:
-                        if(board.valid(tetromino, x, y+1)) {
-                            tetromino.move(0, 1);
-                        }
-                        break;
-                    case KeyEvent.VK_UP:
-                        int[][] nextShape = tetromino.rotateShape();
-                        int[][] currentShape = tetromino.getShape();
-
-                        tetromino.setShape(nextShape);
-                        if(!board.valid(tetromino, x, y)) {
-                            tetromino.setShape(currentShape);
-                        }
-                        break;
-                    case KeyEvent.VK_SPACE:  //instant drop
-                        while(board.valid(tetromino, tetromino.getX(), tetromino.getY() + 1)) {
-                            tetromino.move(0, 1);
-                        }
-                        fallCount = 30; 
-                        break;
+                else if(currentState == GameState.PLAYING) {
+                    gamePlayInput(input);
                 }
                 repaint();
             }
         });
     }
+
+    //game over
+    private void gameOverInput(int input) {
+        if( input == KeyEvent.VK_ENTER) {
+            resetGame();
+        }
+        else if( input == KeyEvent.VK_ESCAPE) {
+            currentState = GameState.MENU;
+        }
+    }
+    //game menu
+    private void menuInput(int key) {
+        if (key == KeyEvent.VK_UP) {
+            menuOption--;
+            if (menuOption < 0) menuOption = 2;
+        }
+        else if (key == KeyEvent.VK_DOWN) {
+            menuOption++;
+            if (menuOption > 2) menuOption = 0;
+        } 
+        else if (key == KeyEvent.VK_ENTER) {
+            if (menuOption == 0) resetGame();
+            else if (menuOption == 1) {
+                if (fallSpeed == 30) { fallSpeed = 15; difficulty = "HARD"; }
+                else if (fallSpeed == 15) { fallSpeed = 45; difficulty = "EASY"; }
+                else { fallSpeed = 30; difficulty = "NORMAL"; }
+            } 
+            else if (menuOption == 2) System.exit(0);
+        }
+    }
+    //gameplay
+    private void gamePlayInput(int input) {
+        if(tetromino == null || board == null) {
+                return;
+            }
+            int x = tetromino.getX();
+            int y = tetromino.getY();
+
+            switch (input) {
+                case KeyEvent.VK_LEFT:
+                    if(board.valid(tetromino, x-1, y)) {
+                        tetromino.move(-1, 0);
+                    }
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    if(board.valid(tetromino, x+1, y)) {
+                        tetromino.move(1, 0);
+                    }
+                    break;
+                case KeyEvent.VK_DOWN:
+                    if(board.valid(tetromino, x, y+1)) {
+                        tetromino.move(0, 1);
+                    }
+                    break;
+                case KeyEvent.VK_UP:
+                    int[][] nextShape = tetromino.rotateShape();
+                    int[][] currentShape = tetromino.getShape();
+
+                    tetromino.setShape(nextShape);
+                    if(!board.valid(tetromino, x, y)) {
+                        tetromino.setShape(currentShape);
+                    }
+                    break;
+                case KeyEvent.VK_SPACE:  //instant drop
+                    while(board.valid(tetromino, tetromino.getX(), tetromino.getY() + 1)) {
+                        tetromino.move(0, 1);
+                    }
+                    fallCount = 30; 
+                    break;
+        }
+    }
+
     public void launchGame(){
         gameThread = new Thread(this);
         gameThread.start();
@@ -130,8 +128,18 @@ public class GamePanel extends JPanel implements Runnable {
         this.tetromino = RandomTetromino.randomShape();
         this.nextTetromino = RandomTetromino.randomShape();
         this.playArea = new GridOutline();
-
     }
+
+    public void resetGame() {
+        this.board = new Board();
+        this.tetromino = RandomTetromino.randomShape();
+        this.nextTetromino = RandomTetromino.randomShape();
+        this.score = 0;
+        this.fallCount = 0;
+        this.gameOver = false;
+        this.currentState = GameState.PLAYING;
+    }
+
     @Override
     public void run() {
         double drawInterval = 1000000000/FPS;

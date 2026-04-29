@@ -184,33 +184,33 @@ public class GamePanel extends JPanel implements Runnable {
     private void drawMenu(Graphics2D g2) {
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 60));
-        g2.drawString("SIMPLE TETRIS", WIDTH / 2 - 180, 200);
+        g2.drawString("SIMPLE TETRIS", WIDTH/2 - 180, 200);
 
         g2.setFont(new Font("Arial", Font.BOLD, 30));
-        g2.drawString(">" , WIDTH / 2 - 150, 350 + (menuOption * 70));
-        g2.drawString("START GAME", WIDTH / 2 - 100, 350);
-        g2.drawString("DIFFICULTY:  " + difficulty, WIDTH / 2 - 100, 420);
-        g2.drawString("QUIT", WIDTH / 2 - 100, 490);
+        g2.drawString(">" , WIDTH/2 -150, 350 + (menuOption * 70));
+        g2.drawString("START GAME", WIDTH/2 -100, 350);
+        g2.drawString("DIFFICULTY:  " + difficulty, WIDTH/2 -100, 420);
+        g2.drawString("QUIT", WIDTH2 -100, 490);
 
         g2.setColor(Color.YELLOW);
-        g2.drawString("HIGH SCORE: " + highScore, WIDTH / 2 - 100, 600);
+        g2.drawString("HIGH SCORE: " + highScore, WIDTH/2 -100, 600);
     }
 
     private void drawGameOver(Graphics2D g2) {
-        g2.setColor(new Color(0, 0, 0, 150)); // Màn hình tối đi
+        g2.setColor(new Color(0, 0, 0, 150)); 
         g2.fillRect(0, 0, WIDTH, HEIGHT);
 
         g2.setColor(Color.RED);
         g2.setFont(new Font("Arial", Font.BOLD, 60));
-        g2.drawString("GAME OVER", WIDTH / 2 - 180, HEIGHT / 2 - 50);
+        g2.drawString("GAME OVER", WIDTH/2 -180, HEIGHT/2 -50);
 
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 30));
-        g2.drawString("SCORE: " + score, WIDTH / 2 - 100, HEIGHT / 2 + 30);
+        g2.drawString("SCORE: " + score, WIDTH/2 -100, HEIGHT/2 +30);
 
         g2.setFont(new Font("Arial", Font.PLAIN, 20));
-        g2.drawString( "Press ENTER to replay", WIDTH / 2 - 120, HEIGHT / 2 + 100);
-        g2.drawString( "Press ESC for Menu", WIDTH / 2 - 120, HEIGHT / 2 + 140);
+        g2.drawString( "Press ENTER to replay", WIDTH/2 -120, HEIGHT/2 +100);
+        g2.drawString( "Press ESC for Menu", WIDTH/2 -120, HEIGHT/2 +140);
     }
 
     private void drawPlayScreen(Graphics2D g2) {

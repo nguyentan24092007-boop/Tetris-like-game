@@ -154,5 +154,9 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         }
+        //score display
+        g2.setColor(Color.WHITE);
+        g2.setFont(new Font("Arial", Font.BOLD, 30));
+        g2.drawString("SCORE: " + score, 500, 200);
     }
 }

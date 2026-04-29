@@ -57,7 +57,6 @@ public class Board {
 
         for(int y = row - 1; y >= 0; y--) {
             boolean full = true;
-
             for(int x = 0; x < column; x++) {
                 if(!grid[x][y].hasPiece()) {
                     full = false;

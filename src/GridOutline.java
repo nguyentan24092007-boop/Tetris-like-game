@@ -11,7 +11,7 @@ public class GridOutline {
     public GridOutline() {
         left_x = 110;
         right_x = left_x + WIDTH;
-        top_y = 75;
+        top_y = 80;
         bottom_y = top_y + HEIGHT;
     }
     public void draw(Graphics2D g2) {

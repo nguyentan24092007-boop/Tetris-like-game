@@ -182,11 +182,11 @@ public class GamePanel extends JPanel implements Runnable {
         //score display
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 30));
-        g2.drawString("SCORE: " + score, 650, 200);
+        g2.drawString("SCORE: " + score, 600, 200);
 
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Ariel", Font.BOLD, 30));
-        g2.drawString("TOP SCORE: "+ topScore, 650, 300);
+        g2.drawString("TOP SCORE: "+ topScore, 600, 300);
 
         //game over display
         if(gameOver) {
@@ -206,7 +206,7 @@ public class GamePanel extends JPanel implements Runnable {
         //display next tetromino
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 30));
-        g2.drawString("NEXT SHAPE", 650, 400);
+        g2.drawString("NEXT SHAPE", 600, 400);
         if(nextTetromino != null) {
             int[][] nextShape = nextTetromino.getShape();
             g2.setColor(Color.GRAY);
@@ -214,7 +214,7 @@ public class GamePanel extends JPanel implements Runnable {
             for(int i = 0; i < nextShape.length; i++) {
                 for(int j = 0; j < nextShape[0].length; j++) {
                     if(nextShape[i][j] == 1) {
-                        int x = 700 + (j*blockSize);
+                        int x = 650 + (j*blockSize);
                         int y = 450 + (i*blockSize);
                         g2.fill3DRect(x, y, blockSize, blockSize, true);
                     }

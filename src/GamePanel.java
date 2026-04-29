@@ -47,8 +47,8 @@ public class GamePanel extends JPanel implements Runnable {
                     else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                         if (menuOption == 0) { // Start Game
                             board = new Board();
-                            tetromino = Tetromino.randomShape();
-                            nextTetromino = Tetromino.randomShape();
+                            tetromino = RandomTetromino.randomShape();
+                            nextTetromino = RandomTetromino.randomShape();
                             score = 0;
                             fallCount = 0;
                             gameOver = false;
@@ -68,8 +68,8 @@ public class GamePanel extends JPanel implements Runnable {
                 if(gameOver) {
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                         board = new Board();
-                        tetromino = Tetromino.randomShape();
-                        nextTetromino = Tetromino.randomShape();
+                        tetromino = RandomTetromino.randomShape();
+                        nextTetromino = RandomTetromino.randomShape();
                         score = 0;
                         fallCount = 0;
                         gameOver = false;
@@ -127,8 +127,8 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread.start();
 
         this.board = new Board();
-        this.tetromino = Tetromino.randomShape();
-        this.nextTetromino = Tetromino.randomShape();
+        this.tetromino = RandomTetromino.randomShape();
+        this.nextTetromino = RandomTetromino.randomShape();
         this.playArea = new GridOutline();
 
     }
@@ -169,7 +169,7 @@ public class GamePanel extends JPanel implements Runnable {
                 else {
                     board.pieceLock(tetromino);
                     this.tetromino = this.nextTetromino;
-                    this.nextTetromino = Tetromino.randomShape();
+                    this.nextTetromino = RandomTetromino.randomShape();
 
                     //score counting
                     int line = board.clearLine();

@@ -104,13 +104,7 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                     break;
                 case KeyEvent.VK_UP:
-                    int[][] nextShape = tetromino.rotateShape();
-                    int[][] currentShape = tetromino.getShape();
-
-                    tetromino.setShape(nextShape);
-                    if(!board.valid(tetromino, x, y)) {
-                        tetromino.setShape(currentShape);
-                    }
+                    rotateLogic();
                     break;
                 case KeyEvent.VK_SPACE:  //instant drop
                     while(board.valid(tetromino, tetromino.getX(), tetromino.getY() + 1)) {
@@ -119,6 +113,44 @@ public class GamePanel extends JPanel implements Runnable {
                     fallCount = 30; 
                     break;
         }
+    }
+
+    private void rotateLogic() {
+        int x = tetromino.getX();
+        int y = tetromino.getY();
+
+        int[][] nextShape = tetromino.rotateShape();
+        int[][] currentShape = tetromino.getShape();
+
+        tetromino.setShape(nextShape);
+        if(board.valid(tetromino, x, y)) {
+            return;
+        }
+        if(board.valid(tetromino, x-1, y)) {
+            tetromino.move(-1, 0);
+            return;
+        }
+        if(board.valid(tetromino, x+1, y)) {
+            tetromino.move(1, 0);
+            return;
+        }
+        if(board.valid(tetromino, x, y-1)) {
+            tetromino.move(0, -1);
+            return;
+        }
+        if(board.valid(tetromino, x, y+1)) {
+            tetromino.move(0, 1);
+            return;
+        }
+        if (board.valid(tetromino, x - 2, y)) { 
+            tetromino.move(-2, 0);
+            return;
+        }
+        if (board.valid(tetromino, x + 2, y)) { 
+            tetromino.move(2, 0);
+            return;
+        }
+        tetromino.setShape(currentShape);
     }
 
     public void launchGame(){

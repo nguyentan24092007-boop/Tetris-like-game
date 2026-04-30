@@ -18,5 +18,8 @@ public class GridOutline {
         g2.setColor(Color.white);
         g2.setStroke(new BasicStroke(4f));
         g2.drawRect(left_x - 4, top_y - 4, WIDTH + 8, HEIGHT + 8);
+
+        g2.setColor(Color.WHITE);
+        g2.drawRect(550, 140, 400, 400);
     }
 }

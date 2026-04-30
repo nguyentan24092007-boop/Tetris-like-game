@@ -298,9 +298,6 @@ public class GamePanel extends JPanel implements Runnable {
         g2.setFont(new Font("Ariel", Font.BOLD, 30));
         g2.drawString("TOP SCORE: "+ topScore, 600, 300);
 
-        g2.setColor(Color.WHITE);
-        g2.drawRect(550, 140, 400, 400);
-
         //game over display
         if(gameOver) {
             g2.setColor(new Color(0,0, 0,180));

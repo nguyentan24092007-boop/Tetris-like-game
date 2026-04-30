@@ -239,7 +239,7 @@ public class GamePanel extends JPanel implements Runnable {
         if (currentState == GameState.MENU) {
             g2.setColor(Color.WHITE);
             g2.setFont(new Font("Arial", Font.BOLD, 60));
-            g2.drawString("SIMPLE TETRIS", WIDTH / 2 - 250, 200);
+            g2.drawString("TETRIS-LIKE GAME", WIDTH / 2 - 270, 200);
 
             g2.setFont(new Font("Arial", Font.BOLD, 30));
             g2.drawString(">" , WIDTH / 2 - 200, 350 + (menuOption * 70));
@@ -297,6 +297,9 @@ public class GamePanel extends JPanel implements Runnable {
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Ariel", Font.BOLD, 30));
         g2.drawString("TOP SCORE: "+ topScore, 600, 300);
+
+        g2.setColor(Color.WHITE);
+        g2.drawRect(550, 140, 400, 400);
 
         //game over display
         if(gameOver) {

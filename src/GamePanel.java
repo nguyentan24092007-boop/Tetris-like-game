@@ -23,6 +23,10 @@ public class GamePanel extends JPanel implements Runnable {
     private int menuOption = 0;
     private int fallSpeed = 30;
     private String difficulty = "NORMAL";
+    //game mode
+    private int potholeScore = 1000;
+    private int gameModeNumber = 0;
+    private String modeName = "CLASSIC";
 
     public GamePanel(){
         this.setBackground(Color.BLACK);
@@ -77,14 +81,20 @@ public class GamePanel extends JPanel implements Runnable {
                 else { fallSpeed = 30; difficulty = "NORMAL"; }
             } 
             else if (menuOption == 2) { //pick mode
-
+                if (gameModeNumber == 0) {
+                    gameModeNumber = 1;
+                    modeName = "POTHOLE";
+                }
+                else {
+                    gameModeNumber = 0;
+                    modeName = "CLASSIC";
+                }
             }
             else if (menuOption == 3) System.exit(0);
         }
     }
 
     //modes (extra feature)
-
     
     //gameplay
     private void gamePlayInput(int input) {
@@ -178,6 +188,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.fallCount = 0;
         this.gameOver = false;
         this.currentState = GameState.PLAYING;
+        this.potholeScore = 1000;
     }
 
     @Override
@@ -210,7 +221,7 @@ public class GamePanel extends JPanel implements Runnable {
         if(tetromino != null && board != null) {
             fallCount++;  //time counting to fall 
 
-            if(fallCount >= fallSpeed) { //reduce to move faster and vice versa 
+            if(fallCount >= fallSpeed) {
                 if(board.valid(tetromino, tetromino.getX(), tetromino.getY() + 1)) { //asking if the next move valid
                     tetromino.move(0, 1);
                 }
@@ -226,6 +237,12 @@ public class GamePanel extends JPanel implements Runnable {
 
                         if(score > topScore) {
                             topScore = score;
+                        }
+                        if (gameModeNumber == 1) {
+                            while (score >= potholeScore) {
+                                board.potHoleLogic();
+                                potholeScore += 1000;
+                            }
                         }
                     }
                     if(!board.valid(tetromino, tetromino.getX(), tetromino.getY())) {
@@ -253,7 +270,7 @@ public class GamePanel extends JPanel implements Runnable {
             g2.drawString("START GAME", WIDTH / 2 - 150, 350);
             g2.drawString("DIFFICULTY:  " + difficulty, WIDTH / 2 - 150, 420);
             g2.drawString("QUIT", WIDTH / 2 - 150, 560);
-            g2.drawString("MODE: ", WIDTH/2 -150, 490);
+            g2.drawString("MODE: "+ modeName, WIDTH/2 -150, 490);
             return; // Skip drawing the rest of the game board!
         }
 

@@ -1,3 +1,5 @@
+import java.awt.Color;
+
 public class Board {
     public static final int column = 10;
     public static final int row = 20;
@@ -83,5 +85,25 @@ public class Board {
             }
         }
         return clearLine;
+    }
+    //pothole game mode
+    public void potHoleLogic() {
+        for(int y = 1; y < row; y++) {
+            for(int x = 0; x < column; x++) {
+                grid[x][y-1] = grid[x][y];
+            }
+        }
+        int missingBlock = (int) (Math.random()*column);
+
+        for(int x = 0; x <column; x++) {
+            if(x == missingBlock) {
+                grid[x][row-1] = new Block();
+            }
+            else {
+                Block randomLine = new Block();
+                randomLine.have(Color.GRAY);
+                grid[x][row - 1] = randomLine;
+            }
+        }
     }
 }

@@ -63,11 +63,11 @@ public class GamePanel extends JPanel implements Runnable {
     private void menuInput(int key) {
         if (key == KeyEvent.VK_UP) {
             menuOption--;
-            if (menuOption < 0) menuOption = 2;
+            if (menuOption < 0) menuOption = 3;
         }
         else if (key == KeyEvent.VK_DOWN) {
             menuOption++;
-            if (menuOption > 2) menuOption = 0;
+            if (menuOption > 3) menuOption = 0;
         } 
         else if (key == KeyEvent.VK_ENTER) {
             if (menuOption == 0) resetGame();
@@ -76,9 +76,16 @@ public class GamePanel extends JPanel implements Runnable {
                 else if (fallSpeed == 15) { fallSpeed = 45; difficulty = "EASY"; }
                 else { fallSpeed = 30; difficulty = "NORMAL"; }
             } 
-            else if (menuOption == 2) System.exit(0);
+            else if (menuOption == 2) { //pick mode
+
+            }
+            else if (menuOption == 3) System.exit(0);
         }
     }
+
+    //modes (extra feature)
+
+    
     //gameplay
     private void gamePlayInput(int input) {
         if(tetromino == null || board == null) {
@@ -245,7 +252,8 @@ public class GamePanel extends JPanel implements Runnable {
             g2.drawString(">" , WIDTH / 2 - 200, 350 + (menuOption * 70));
             g2.drawString("START GAME", WIDTH / 2 - 150, 350);
             g2.drawString("DIFFICULTY:  " + difficulty, WIDTH / 2 - 150, 420);
-            g2.drawString("QUIT", WIDTH / 2 - 150, 490);
+            g2.drawString("QUIT", WIDTH / 2 - 150, 560);
+            g2.drawString("MODE: ", WIDTH/2 -150, 490);
             return; // Skip drawing the rest of the game board!
         }
 

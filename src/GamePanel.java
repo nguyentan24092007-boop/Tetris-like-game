@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
 public class GamePanel extends JPanel implements Runnable {
     public static final int WIDTH=1000;
@@ -27,6 +28,7 @@ public class GamePanel extends JPanel implements Runnable {
     private int potholeScore = 1000;
     private int gameModeNumber = 0;
     private String modeName = "CLASSIC";
+    Random random = new Random();
 
     public GamePanel(){
         this.setBackground(Color.BLACK);
@@ -85,6 +87,10 @@ public class GamePanel extends JPanel implements Runnable {
                     gameModeNumber = 1;
                     modeName = "POTHOLE";
                 }
+                else if(gameModeNumber == 1) {
+                    gameModeNumber = 2;
+                    modeName = "RANDOM SHAPE";
+                }
                 else {
                     gameModeNumber = 0;
                     modeName = "CLASSIC";
@@ -95,6 +101,21 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     //modes (extra feature)
+    private void randomShape() {
+        Tetromino newShape = RandomTetromino.randomShape();
+        int randomRotateTime = random.nextInt(4);
+        
+        for (int i = 0; i < randomRotateTime; i++) {
+            newShape.setShape(newShape.rotateShape());
+        }
+        int moveX = tetromino.getX() - newShape.getX();
+        int moveY = tetromino.getY() - newShape.getY();
+        newShape.move(moveX, moveY);
+
+        if (board.valid(newShape, newShape.getX(), newShape.getY())) {
+            this.tetromino = newShape;
+        }
+    }
     
     //gameplay
     private void gamePlayInput(int input) {
@@ -121,6 +142,12 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                     break;
                 case KeyEvent.VK_UP:
+                    if (gameModeNumber == 2) {
+                        randomShape();
+                    } 
+                    else {
+                        rotateLogic();
+                    }
                     rotateLogic();
                     break;
                 case KeyEvent.VK_SPACE:  //instant drop

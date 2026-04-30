@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.util.*;
 
 public class Board {
     public static final int column = 10;
@@ -93,7 +94,8 @@ public class Board {
                 grid[x][y-1] = grid[x][y];
             }
         }
-        int missingBlock = (int) (Math.random()*column);
+        Random randomLocation = new Random();
+        int missingBlock = randomLocation.nextInt(4);
 
         for(int x = 0; x <column; x++) {
             if(x == missingBlock) {

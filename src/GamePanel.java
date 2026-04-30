@@ -56,6 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
         else if( input == KeyEvent.VK_ESCAPE) {
             currentState = GameState.MENU;
+            gameOver = false;
         }
     }
     //game menu
@@ -158,8 +159,8 @@ public class GamePanel extends JPanel implements Runnable {
                 delta--;
             }
         }
-
     }
+    
     public void update(){
         if(currentState == GameState.MENU) {
             return;
@@ -170,7 +171,7 @@ public class GamePanel extends JPanel implements Runnable {
         if(tetromino != null && board != null) {
             fallCount++;  //time counting to fall 
 
-            if(fallCount >= 30) { //reduce to move faster and vice versa 
+            if(fallCount >= fallSpeed) { //reduce to move faster and vice versa 
                 if(board.valid(tetromino, tetromino.getX(), tetromino.getY() + 1)) { //asking if the next move valid
                     tetromino.move(0, 1);
                 }

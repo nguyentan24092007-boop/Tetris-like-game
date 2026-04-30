@@ -162,12 +162,12 @@ public class GamePanel extends JPanel implements Runnable {
     }
     
     public void update(){
-        if(currentState == GameState.MENU) {
-            return;
+        if(currentState == GameState.PLAYING && !gameOver) {
+            gameLogic();
         }
-        if(gameOver) {
-            return;
-        }
+    }
+
+    private void gameLogic () {
         if(tetromino != null && board != null) {
             fallCount++;  //time counting to fall 
 
@@ -197,6 +197,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
+
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 

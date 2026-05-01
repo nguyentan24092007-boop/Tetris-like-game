@@ -148,7 +148,6 @@ public class GamePanel extends JPanel implements Runnable {
                     else {
                         rotateLogic();
                     }
-                    rotateLogic();
                     break;
                 case KeyEvent.VK_SPACE:  //instant drop
                     while(board.valid(tetromino, tetromino.getX(), tetromino.getY() + 1)) {
@@ -284,105 +283,17 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 
-        Graphics2D g2 = (Graphics2D) g;
-
-        //game menu
-        if (currentState == GameState.MENU) {
-            g2.setColor(Color.WHITE);
-            g2.setFont(new Font("Arial", Font.BOLD, 60));
-            g2.drawString("TETRIS-LIKE GAME", WIDTH / 2 - 270, 200);
-
-            g2.setFont(new Font("Arial", Font.BOLD, 30));
-            g2.drawString(">" , WIDTH / 2 - 200, 350 + (menuOption * 70));
-            g2.drawString("START GAME", WIDTH / 2 - 150, 350);
-            g2.drawString("DIFFICULTY:  " + difficulty, WIDTH / 2 - 150, 420);
-            g2.drawString("QUIT", WIDTH / 2 - 150, 560);
-            g2.drawString("MODE: "+ modeName, WIDTH/2 -150, 490);
-            return; // Skip drawing the rest of the game board!
-        }
-
-        if(playArea != null) {
-            playArea.draw(g2);
-        }
-
-        g2.setColor(new Color(50, 50, 50));
-        for(int i = 0; i < Board.column; i++) {
-            for(int j = 0; j < Board.row; j++) {
-                int x = GridOutline.left_x + (i * blockSize);
-                int y = GridOutline.top_y + (j * blockSize);
-                g2.drawRect(x, y, blockSize, blockSize);
-            }
-        }
-        if(board != null) {
-            Block[][] current = board.getGrid();
-            
-            for(int i = 0; i < Board.column; i++) {
-                for(int j = 0; j< Board.row; j++) {
-                    if(current[i][j].hasPiece()) {
-                        g2.setColor(current[i][j].getColor());
-                        int x = GridOutline.left_x + (i * blockSize);
-                        int y = GridOutline.top_y + (j * blockSize);
-                        g2.fill3DRect(x, y, blockSize, blockSize, true);
-                    }
-                }
-            }
-        }
-        if(tetromino != null) {
-            int[][] shape = tetromino.getShape();
-            g2.setColor(tetromino.getColor());
-
-            for(int i = 0; i < shape.length; i++) {
-                for(int j = 0; j < shape[0].length; j++) {
-                    if(shape[i][j] == 1) {
-                        int x = GridOutline.left_x + ((tetromino.getX() + j) * blockSize);
-                        int y = GridOutline.top_y + ((tetromino.getY() + i) * blockSize);
-                        g2.fill3DRect(x, y, blockSize, blockSize, true);
-                    }
-                }
-            }
-        }
-        //score display
-        g2.setColor(Color.WHITE);
-        g2.setFont(new Font("Arial", Font.BOLD, 30));
-        g2.drawString("SCORE: " + score, 600, 200);
-
-        g2.setColor(Color.WHITE);
-        g2.setFont(new Font("Ariel", Font.BOLD, 30));
-        g2.drawString("TOP SCORE: "+ topScore, 600, 300);
-
-        //game over display
-        if(gameOver) {
-            g2.setColor(new Color(0,0, 0,180));
-            g2.fillRect(GridOutline.left_x, GridOutline.top_y, 300, 600);
-
-            g2.setColor(Color.RED);
-            g2.setFont(new Font("Arial", Font.BOLD, 45));
-            g2.drawString("GAME OVER", GridOutline.left_x + 12, GridOutline.top_y +300);
-
-            //press enter to retry and esc for menu
-            g2.setColor(Color.YELLOW);
-            g2.setFont(new Font("Arial", Font.BOLD, 50));
-            g2.drawString("Press ENTER to retry or ESC for menu", 45, GridOutline.top_y -20);
-
-        }
-        
-        //display next tetromino
-        g2.setColor(Color.WHITE);
-        g2.setFont(new Font("Arial", Font.BOLD, 30));
-        g2.drawString("NEXT SHAPE", 600, 400);
-        if(nextTetromino != null) {
-            int[][] nextShape = nextTetromino.getShape();
-            g2.setColor(Color.GRAY);
-
-            for(int i = 0; i < nextShape.length; i++) {
-                for(int j = 0; j < nextShape[0].length; j++) {
-                    if(nextShape[i][j] == 1) {
-                        int x = 650 + (j*blockSize);
-                        int y = 450 + (i*blockSize);
-                        g2.fill3DRect(x, y, blockSize, blockSize, true);
-                    }
-                }
-            }
-        }
+        GameUserInterface.draw((Graphics2D) g, this);
     }
+    public GameState getCurrentState() { return currentState; }
+    public int getMenuOption() { return menuOption; }
+    public String getDifficulty() { return difficulty; }
+    public String getModeName() { return modeName; }
+    public boolean getGameOver() { return gameOver; }
+    public GridOutline getPlayArea() { return playArea; }
+    public Board getBoard() { return board; }
+    public Tetromino getTetromino() { return tetromino; }
+    public Tetromino getNextTetromino() { return nextTetromino; }
+    public int getScore() { return score; }
+    public int getTopScore() { return topScore; }
 }

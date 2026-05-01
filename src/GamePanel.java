@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.*;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -158,7 +157,16 @@ public class GamePanel extends JPanel implements Runnable {
                     //score counting
                     int line = board.clearLine();
                     if(line > 0) {
-                        score += (line*100);
+                        int scoreMultiply = 100;
+                        
+                        if(fallSpeed == 45) {
+                            scoreMultiply = 50;
+                        }
+                        else { 
+                            scoreMultiply = 200;
+                        }
+
+                        score += (line*scoreMultiply);
 
                         if(score > topScore) {
                             topScore = score;

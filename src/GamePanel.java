@@ -37,71 +37,11 @@ public class GamePanel extends JPanel implements Runnable {
 
         //keyboard input
         this.setFocusable(true);
-        this.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                int input = e.getKeyCode();
-
-                if (gameOver) {
-                    gameOverInput(input);
-                }
-                else if(currentState == GameState.MENU) {
-                    menuInput(input);
-                }
-                else if(currentState == GameState.PLAYING) {
-                    gamePlayInput(input);
-                }
-                repaint();
-            }
-        });
-    }
-
-    //game over
-    private void gameOverInput(int input) {
-        if( input == KeyEvent.VK_ENTER) {
-            resetGame();
-        }
-        else if( input == KeyEvent.VK_ESCAPE) {
-            currentState = GameState.MENU;
-            gameOver = false;
-        }
-    }
-    //game menu
-    private void menuInput(int key) {
-        if (key == KeyEvent.VK_UP) {
-            menuOption--;
-            if (menuOption < 0) menuOption = 3;
-        }
-        else if (key == KeyEvent.VK_DOWN) {
-            menuOption++;
-            if (menuOption > 3) menuOption = 0;
-        } 
-        else if (key == KeyEvent.VK_ENTER) {
-            if (menuOption == 0) resetGame();
-            else if (menuOption == 1) {
-                if (fallSpeed == 30) { fallSpeed = 15; difficulty = "HARD"; }
-                else if (fallSpeed == 15) { fallSpeed = 45; difficulty = "EASY"; }
-                else { fallSpeed = 30; difficulty = "NORMAL"; }
-            } 
-            else if (menuOption == 2) { //pick mode
-                if (gameModeNumber == 0) {
-                    gameModeNumber = 1;
-                    modeName = "POTHOLE";
-                }
-                else if(gameModeNumber == 1) {
-                    gameModeNumber = 2;
-                    modeName = "RANDOM SHAPE";
-                }
-                else {
-                    gameModeNumber = 0;
-                    modeName = "CLASSIC";
-                }
-            }
-            else if (menuOption == 3) System.exit(0);
-        }
+        this.addKeyListener(new KeyInput(this));
     }
 
     //modes (extra feature)
-    private void randomShape() {
+    public void randomShape() {
         Tetromino newShape = RandomTetromino.randomShape();
         int randomRotateTime = random.nextInt(4);
         
@@ -116,49 +56,8 @@ public class GamePanel extends JPanel implements Runnable {
             this.tetromino = newShape;
         }
     }
-    
-    //gameplay
-    private void gamePlayInput(int input) {
-        if(tetromino == null || board == null) {
-                return;
-            }
-            int x = tetromino.getX();
-            int y = tetromino.getY();
 
-            switch (input) {
-                case KeyEvent.VK_LEFT:
-                    if(board.valid(tetromino, x-1, y)) {
-                        tetromino.move(-1, 0);
-                    }
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    if(board.valid(tetromino, x+1, y)) {
-                        tetromino.move(1, 0);
-                    }
-                    break;
-                case KeyEvent.VK_DOWN:
-                    if(board.valid(tetromino, x, y+1)) {
-                        tetromino.move(0, 1);
-                    }
-                    break;
-                case KeyEvent.VK_UP:
-                    if (gameModeNumber == 2) {
-                        randomShape();
-                    } 
-                    else {
-                        rotateLogic();
-                    }
-                    break;
-                case KeyEvent.VK_SPACE:  //instant drop
-                    while(board.valid(tetromino, tetromino.getX(), tetromino.getY() + 1)) {
-                        tetromino.move(0, 1);
-                    }
-                    fallCount = 30; 
-                    break;
-        }
-    }
-
-    private void rotateLogic() {
+    public void rotateLogic() {
         int x = tetromino.getX();
         int y = tetromino.getY();
 
@@ -285,15 +184,39 @@ public class GamePanel extends JPanel implements Runnable {
 
         GameUserInterface.draw((Graphics2D) g, this);
     }
+    
     public GameState getCurrentState() { return currentState; }
+    public void setCurrentState(GameState currentGameState) { this.currentState = currentGameState; }
+
     public int getMenuOption() { return menuOption; }
+    public void setMenuOption(int menuOption) { this.menuOption = menuOption; }
+
     public String getDifficulty() { return difficulty; }
+    public void setDifficulty(String difficulty) { this.difficulty = difficulty; }
+
     public String getModeName() { return modeName; }
+    public void setModeName(String modeName) { this.modeName = modeName; }
+
     public boolean getGameOver() { return gameOver; }
+    public void setGameOver(boolean gameOver) { this.gameOver = gameOver; }
+
     public GridOutline getPlayArea() { return playArea; }
+
     public Board getBoard() { return board; }
+
     public Tetromino getTetromino() { return tetromino; }
+
     public Tetromino getNextTetromino() { return nextTetromino; }
+
     public int getScore() { return score; }
+    
     public int getTopScore() { return topScore; }
+    
+    public void setFallCount(int fallCount) { this.fallCount = fallCount; }
+    
+    public int getGameModeNumber() { return gameModeNumber; }
+    public void setGameModeNumber(int gameModeNumber) { this.gameModeNumber = gameModeNumber; }
+    
+    public int getFallSpeed() { return fallSpeed; }
+    public void setFallSpeed(int fallSpeed) { this.fallSpeed = fallSpeed; }
 }

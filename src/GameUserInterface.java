@@ -60,11 +60,11 @@ public class GameUserInterface {
         //score display
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 30));
-        g2.drawString("SCORE: " + gamePanel.getScore(), 600, 200);
+        g2.drawString("SCORE: " + gamePanel.getScore(), 580, 200);
 
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Ariel", Font.BOLD, 30));
-        g2.drawString("TOP SCORE: "+ gamePanel.getTopScore(), 600, 300);
+        g2.drawString("TOP SCORE: "+ gamePanel.getTopScore(), 580, 300);
 
         //game over display
         if(gamePanel.getGameOver()) {
@@ -85,7 +85,7 @@ public class GameUserInterface {
         //display next tetromino
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 30));
-        g2.drawString("NEXT SHAPE", 600, 400);
+        g2.drawString("NEXT SHAPE", 580, 400);
         if(gamePanel.getNextTetromino() != null) {
             int[][] nextShape = gamePanel.getNextTetromino().getShape();
             g2.setColor(Color.GRAY);

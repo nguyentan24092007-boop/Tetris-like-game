@@ -60,11 +60,11 @@ public class GameUserInterface {
         //score display
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 30));
-        g2.drawString("SCORE: " + gamePanel.getScore(), 580, 200);
+        g2.drawString("SCORE: " + gamePanel.getScore(), 580, 120);
 
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Ariel", Font.BOLD, 30));
-        g2.drawString("TOP SCORE: "+ gamePanel.getTopScore(), 580, 300);
+        g2.drawString("TOP SCORE: "+ gamePanel.getTopScore(), 580, 220);
 
         //game over display
         if(gamePanel.getGameOver()) {
@@ -85,7 +85,7 @@ public class GameUserInterface {
         //display next tetromino
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 30));
-        g2.drawString("NEXT SHAPE", 580, 400);
+        g2.drawString("NEXT SHAPE", 580, 320);
         if(gamePanel.getNextTetromino() != null) {
             int[][] nextShape = gamePanel.getNextTetromino().getShape();
             g2.setColor(Color.GRAY);
@@ -94,7 +94,7 @@ public class GameUserInterface {
                 for(int j = 0; j < nextShape[0].length; j++) {
                     if(nextShape[i][j] == 1) {
                         int x = 650 + (j*GamePanel.blockSize);
-                        int y = 450 + (i*GamePanel.blockSize);
+                        int y = 370 + (i*GamePanel.blockSize);
                         g2.fill3DRect(x, y, GamePanel.blockSize, GamePanel.blockSize, true);
                     }
                 }

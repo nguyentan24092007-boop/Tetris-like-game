@@ -43,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void randomShape() {
         Tetromino newShape = RandomTetromino.randomShape();
         int randomRotateTime = random.nextInt(4);
-        
+
         for (int i = 0; i < randomRotateTime; i++) {
             newShape.setShape(newShape.rotateShape());
         }
@@ -83,11 +83,11 @@ public class GamePanel extends JPanel implements Runnable {
             tetromino.move(0, 1);
             return;
         }
-        if (board.valid(tetromino, x - 2, y)) { 
+        if (board.valid(tetromino, x - 2, y)) {
             tetromino.move(-2, 0);
             return;
         }
-        if (board.valid(tetromino, x + 2, y)) { 
+        if (board.valid(tetromino, x + 2, y)) {
             tetromino.move(2, 0);
             return;
         }
@@ -97,7 +97,6 @@ public class GamePanel extends JPanel implements Runnable {
     public void launchGame(){
         gameThread = new Thread(this);
         gameThread.start();
-
         this.board = new Board();
         this.tetromino = RandomTetromino.randomShape();
         this.nextTetromino = RandomTetromino.randomShape();
@@ -134,7 +133,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
-    
+
     public void update(){
         if(currentState == GameState.PLAYING && !gameOver) {
             gameLogic();
@@ -143,13 +142,14 @@ public class GamePanel extends JPanel implements Runnable {
 
     private void gameLogic () {
         if(tetromino != null && board != null) {
-            fallCount++;  //time counting to fall 
+            fallCount++;  //time counting to fall
 
             if(fallCount >= fallSpeed) {
                 if(board.valid(tetromino, tetromino.getX(), tetromino.getY() + 1)) { //asking if the next move valid
                     tetromino.move(0, 1);
                 }
                 else {
+                    SFX.playSound("sfx/lock_block.wav"); // locking block sfx
                     board.pieceLock(tetromino);
                     this.tetromino = this.nextTetromino;
                     this.nextTetromino = RandomTetromino.randomShape();
@@ -157,12 +157,13 @@ public class GamePanel extends JPanel implements Runnable {
                     //score counting
                     int line = board.clearLine();
                     if(line > 0) {
+
                         int scoreMultiply = 100;
-                        
+
                         if(fallSpeed == 45) {
                             scoreMultiply = 50;
                         }
-                        else { 
+                        else {
                             scoreMultiply = 200;
                         }
 
@@ -180,6 +181,7 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                     if(!board.valid(tetromino, tetromino.getX(), tetromino.getY())) {
                         gameOver = true;
+                        SFX.playSound("sfx/game_over.wav"); // game over sfx
                     }
                 }
                 fallCount = 0;
@@ -192,7 +194,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         GameUserInterface.draw((Graphics2D) g, this);
     }
-    
+
     public GameState getCurrentState() { return currentState; }
     public void setCurrentState(GameState currentGameState) { this.currentState = currentGameState; }
 
@@ -206,7 +208,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setModeName(String modeName) { this.modeName = modeName; }
 
     public boolean getGameOver() { return gameOver; }
-    public void setGameOver(boolean gameOver) { this.gameOver = gameOver; }
+    public void setGameOver(boolean gameOver) {  this.gameOver = gameOver; }
 
     public GridOutline getPlayArea() { return playArea; }
 
@@ -217,14 +219,14 @@ public class GamePanel extends JPanel implements Runnable {
     public Tetromino getNextTetromino() { return nextTetromino; }
 
     public int getScore() { return score; }
-    
+
     public int getTopScore() { return topScore; }
-    
+
     public void setFallCount(int fallCount) { this.fallCount = fallCount; }
-    
+
     public int getGameModeNumber() { return gameModeNumber; }
     public void setGameModeNumber(int gameModeNumber) { this.gameModeNumber = gameModeNumber; }
-    
+
     public int getFallSpeed() { return fallSpeed; }
     public void setFallSpeed(int fallSpeed) { this.fallSpeed = fallSpeed; }
 }

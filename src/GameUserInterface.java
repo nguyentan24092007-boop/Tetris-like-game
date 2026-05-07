@@ -100,6 +100,22 @@ public class GameUserInterface {
                 }
             }
         }
+        //button guide
+        g2.setColor(Color.WHITE);
+        g2.setFont(new Font("Ariel", Font.PLAIN, 25));
+        if(gamePanel.getGameModeNumber() == 2) {
+            g2.drawString("\u2191 : Change tetromino", 600, 510);
+        }
+        else {
+            g2.drawString("\u2191 : Rotate tetromino", 600, 510);
+        }
+        g2.drawString("\u2190 : Move left", 600, 542);
+        g2.drawString("\u2192 : Move right", 600, 574);
+        g2.drawString("\u2193 : Fast drop", 600, 606);
+        g2.drawString("Space : Instance drop", 600, 638);
+        g2.drawString("Esc : Pause", 600, 670);
+
+        //game pause
         if (gamePanel.getCurrentState() == GamePanel.GameState.PAUSED) {
             g2.setColor(new Color(0, 0, 0, 150)); //Darken the screen when pausing the game
             g2.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);

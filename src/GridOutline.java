@@ -22,6 +22,6 @@ public class GridOutline {
         g2.setColor(Color.WHITE);
         g2.drawRect(550, 75, 350, 390);
 
-        g2.drawRect(550, 500, 350, 183);
+        g2.drawRect(550, 480, 350, 203);
     }
 }

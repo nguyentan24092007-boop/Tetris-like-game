@@ -15,5 +15,6 @@ public class Main {
         window.setVisible(true);
 
         gp.launchGame();
+        SFX.playBGM("sfx/bgm.wav"); //play BGM
     }
 }

@@ -31,7 +31,7 @@ public class GameUserInterface {
         }
         if(gamePanel.getBoard() != null) {
             Block[][] current = gamePanel.getBoard().getGrid();
-            
+
             for(int i = 0; i < Board.column; i++) {
                 for(int j = 0; j< Board.row; j++) {
                     if(current[i][j].hasPiece()) {
@@ -81,7 +81,7 @@ public class GameUserInterface {
             g2.drawString("Press ENTER to retry or ESC for menu", 45, GridOutline.top_y -20);
 
         }
-        
+
         //display next tetromino
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 30));
@@ -99,6 +99,19 @@ public class GameUserInterface {
                     }
                 }
             }
+        }
+        if (gamePanel.getCurrentState() == GamePanel.GameState.PAUSED) {
+            g2.setColor(new Color(0, 0, 0, 150)); //Darken the screen when pausing the game
+            g2.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
+
+            g2.setColor(Color.YELLOW);
+            g2.setFont(new Font("Ariel", Font.BOLD, 50));
+            g2.drawString("PAUSED", GamePanel.WIDTH / 2 - 100, GamePanel.HEIGHT / 2);
+
+            g2.setColor(Color.WHITE);
+            g2.setFont(new Font("Ariel", Font.PLAIN, 30));
+            g2.drawString("Press Enter to Resume", GamePanel.WIDTH / 2 - 150, GamePanel.HEIGHT / 2 + 60);
+            g2.drawString("Press ESC for Menu", GamePanel.WIDTH / 2 - 130, GamePanel.HEIGHT / 2 + 100);
         }
     }
 }

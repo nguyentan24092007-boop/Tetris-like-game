@@ -3,6 +3,7 @@ import java.awt.event.KeyEvent;
 
 public class KeyInput extends KeyAdapter {
     private GamePanel gamePanel;
+
     public KeyInput(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
     }
@@ -17,6 +18,8 @@ public class KeyInput extends KeyAdapter {
             menuInput(input);
         } else if (gamePanel.getCurrentState() == GamePanel.GameState.PLAYING) {
             gamePlayInput(input);
+        } else if (gamePanel.getCurrentState() == GamePanel.GameState.PAUSED) {
+            pausedInput(input);
         }
         gamePanel.repaint();
     }
@@ -61,23 +64,20 @@ public class KeyInput extends KeyAdapter {
                 if (gamePanel.getGameModeNumber() == 0) {
                     gamePanel.setGameModeNumber(1);
                     gamePanel.setModeName("POTHOLE");
-                }
-                else if(gamePanel.getGameModeNumber() == 1) {
+                } else if (gamePanel.getGameModeNumber() == 1) {
                     gamePanel.setGameModeNumber(2);
                     gamePanel.setModeName("RANDOM SHAPE");
-                }
-                else {
+                } else {
                     gamePanel.setGameModeNumber(0);
                     gamePanel.setModeName("CLASSIC");
                 }
-            }
-            else if (menuOption == 3) System.exit(0);
+            } else if (menuOption == 3) System.exit(0);
         }
     }
 
     //gameplay
     private void gamePlayInput(int input) {
-        if(gamePanel.getTetromino() == null || gamePanel.getBoard() == null) {
+        if (gamePanel.getTetromino() == null || gamePanel.getBoard() == null) {
             return;
         }
         int x = gamePanel.getTetromino().getX();
@@ -85,19 +85,19 @@ public class KeyInput extends KeyAdapter {
 
         switch (input) {
             case KeyEvent.VK_LEFT:
-                if(gamePanel.getBoard().valid(gamePanel.getTetromino(), x-1, y)) {
+                if (gamePanel.getBoard().valid(gamePanel.getTetromino(), x - 1, y)) {
                     gamePanel.getTetromino().move(-1, 0);
                 }
                 SFX.playSound("sfx/rotate_block.wav"); // rotating block sfx
                 break;
             case KeyEvent.VK_RIGHT:
-                if(gamePanel.getBoard().valid(gamePanel.getTetromino(), x+1, y)) {
+                if (gamePanel.getBoard().valid(gamePanel.getTetromino(), x + 1, y)) {
                     gamePanel.getTetromino().move(1, 0);
                 }
                 SFX.playSound("sfx/rotate_block.wav"); // rotating block sfx
                 break;
             case KeyEvent.VK_DOWN:
-                if(gamePanel.getBoard().valid(gamePanel.getTetromino(), x, y+1)) {
+                if (gamePanel.getBoard().valid(gamePanel.getTetromino(), x, y + 1)) {
                     gamePanel.getTetromino().move(0, 1);
                 }
                 SFX.playSound("sfx/rotate_block.wav"); // rotating block sfx
@@ -112,12 +112,22 @@ public class KeyInput extends KeyAdapter {
                 SFX.playSound("sfx/rotate_block.wav"); // rotating block sfx
                 break;
             case KeyEvent.VK_SPACE:  //instant drop
-                while(gamePanel.getBoard().valid(gamePanel.getTetromino(), gamePanel.getTetromino().getX(), gamePanel.getTetromino().getY() + 1)) {
+                while (gamePanel.getBoard().valid(gamePanel.getTetromino(), gamePanel.getTetromino().getX(), gamePanel.getTetromino().getY() + 1)) {
                     gamePanel.getTetromino().move(0, 1);
                 }
                 gamePanel.setFallCount(30);
-
                 break;
+        }
+        if (input == KeyEvent.VK_ESCAPE) {
+            gamePanel.setCurrentState(GamePanel.GameState.PAUSED);
+        }
+    }
+
+    private void pausedInput(int input) {
+        if (input == KeyEvent.VK_ESCAPE || input == KeyEvent.VK_ENTER) {
+            gamePanel.setCurrentState(GamePanel.GameState.PLAYING);
+        } else if (input == KeyEvent.VK_BACK_SPACE) {
+            gamePanel.setCurrentState(GamePanel.GameState.MENU);
         }
     }
 }

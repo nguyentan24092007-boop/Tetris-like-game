@@ -106,12 +106,12 @@ public class GameUserInterface {
 
             g2.setColor(Color.YELLOW);
             g2.setFont(new Font("Ariel", Font.BOLD, 50));
-            g2.drawString("PAUSED", GamePanel.WIDTH / 2 - 100, GamePanel.HEIGHT / 2);
+            g2.drawString("PAUSED", GamePanel.WIDTH / 2 - 90, GamePanel.HEIGHT / 2 - 40);
 
             g2.setColor(Color.WHITE);
             g2.setFont(new Font("Ariel", Font.PLAIN, 30));
-            g2.drawString("Press Enter to Resume", GamePanel.WIDTH / 2 - 150, GamePanel.HEIGHT / 2 + 60);
-            g2.drawString("Press ESC for Menu", GamePanel.WIDTH / 2 - 130, GamePanel.HEIGHT / 2 + 100);
+            g2.drawString("Press ENTER to Resume", GamePanel.WIDTH / 2 - 150, GamePanel.HEIGHT / 2 + 30);
+            g2.drawString("Press ESC for Menu", GamePanel.WIDTH / 2 - 130, GamePanel.HEIGHT / 2 + 80);
         }
     }
 }

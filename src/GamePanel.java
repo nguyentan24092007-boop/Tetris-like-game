@@ -18,7 +18,7 @@ public class GamePanel extends JPanel implements Runnable {
     private boolean gameOver = false;
 
     //add game menu
-    public enum GameState { MENU, PLAYING }
+    public enum GameState { MENU, PLAYING, PAUSED }
     private GameState currentState = GameState.MENU;
     private int menuOption = 0;
     private int fallSpeed = 30;

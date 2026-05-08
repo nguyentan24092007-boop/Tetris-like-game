@@ -68,6 +68,7 @@ public class Board {
             }
             if(full) {
                 clearLine++;
+                SFX.playSound("sfx/line_clear.wav");
             
                 for(int dropY = y; dropY > 0; dropY--) {
                     for(int x = 0; x < column; x++) {

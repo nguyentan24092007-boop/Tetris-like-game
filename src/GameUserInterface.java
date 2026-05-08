@@ -16,6 +16,7 @@ public class GameUserInterface {
 
             g2.setFont(new Font("Arial", Font.BOLD, 40));
             g2.drawString("\u2192" , GamePanel.WIDTH / 2 - 200, 350 + (gamePanel.getMenuOption() * 70));
+            
             g2.setFont(new Font("Arial", Font.BOLD, 30));
             g2.drawString("START GAME", GamePanel.WIDTH / 2 - 150, 350);
             g2.drawString("DIFFICULTY:  " + gamePanel.getDifficulty(), GamePanel.WIDTH / 2 - 150, 420);
@@ -79,9 +80,6 @@ public class GameUserInterface {
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 30));
         g2.drawString("SCORE: " + gamePanel.getScore(), 580, 140);
-
-        g2.setColor(Color.WHITE);
-        g2.setFont(new Font("Ariel", Font.BOLD, 30));
         g2.drawString("TOP SCORE: "+ gamePanel.getTopScore(), 560, 210);
 
         //game over display

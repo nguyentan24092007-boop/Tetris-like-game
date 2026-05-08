@@ -69,9 +69,6 @@ The scoring system is designed to reward higher difficulty and multi-line clears
 * **Normal:** 100 points per line
 * **Hard:** 200 points per line
 
-
-* **Progression:** The falling speed increases every **500 points** to provide a dynamic difficulty curve.
-
 ---
 
 ## ⌨️ Input Mapping

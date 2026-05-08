@@ -31,6 +31,7 @@ public class GamePanel extends JPanel implements Runnable {
     Random random = new Random();
     //sound 
     private Clip themeClip;
+    private boolean gameOverSound = false;
 
     public GamePanel(){
         this.setBackground(Color.BLACK);
@@ -114,6 +115,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.score = 0;
         this.fallCount = 0;
         this.gameOver = false;
+        this.gameOverSound = false;
         this.currentState = GameState.PLAYING;
         this.potholeScore = 1000;
 
@@ -147,9 +149,10 @@ public class GamePanel extends JPanel implements Runnable {
         if(currentState == GameState.PLAYING && !gameOver) {
             gameLogic();
         }
-        if (gameOver) {
+        if (gameOver && !gameOverSound) {
             SFX.stopSound(themeClip);
             SFX.playSound(SFX.GAMEOVER_BGM);
+            gameOverSound = true;
         }
     }
 
@@ -162,7 +165,6 @@ public class GamePanel extends JPanel implements Runnable {
                     tetromino.move(0, 1);
                 }
                 else {
-                    SFX.playSound("sfx/lock_block.wav"); // locking block sfx
                     board.pieceLock(tetromino);
                     this.tetromino = this.nextTetromino;
                     this.nextTetromino = RandomTetromino.randomShape();
@@ -194,7 +196,6 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                     if(!board.valid(tetromino, tetromino.getX(), tetromino.getY())) {
                         gameOver = true;
-                        SFX.playSound("sfx/game_over.wav"); // game over sfx
                     }
                 }
                 fallCount = 0;

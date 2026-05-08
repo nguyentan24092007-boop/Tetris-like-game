@@ -88,19 +88,19 @@ public class KeyInput extends KeyAdapter {
                 if (gamePanel.getBoard().valid(gamePanel.getTetromino(), x - 1, y)) {
                     gamePanel.getTetromino().move(-1, 0);
                 }
-                SFX.playSound("sfx/rotate_block.wav"); // rotating block sfx
+                SFX.playSound("sfx/move.wav"); // rotating block sfx
                 break;
             case KeyEvent.VK_RIGHT:
                 if (gamePanel.getBoard().valid(gamePanel.getTetromino(), x + 1, y)) {
                     gamePanel.getTetromino().move(1, 0);
                 }
-                SFX.playSound("sfx/rotate_block.wav"); // rotating block sfx
+                SFX.playSound("sfx/move.wav"); // rotating block sfx
                 break;
             case KeyEvent.VK_DOWN:
                 if (gamePanel.getBoard().valid(gamePanel.getTetromino(), x, y + 1)) {
                     gamePanel.getTetromino().move(0, 1);
                 }
-                SFX.playSound("sfx/rotate_block.wav"); // rotating block sfx
+                SFX.playSound("sfx/move.wav"); // rotating block sfx
                 break;
             case KeyEvent.VK_UP:
                 if (gamePanel.getGameModeNumber() == 2) {
@@ -109,7 +109,7 @@ public class KeyInput extends KeyAdapter {
                 else {
                     gamePanel.rotateLogic();
                 }
-                SFX.playSound("sfx/rotate_block.wav"); // rotating block sfx
+                SFX.playSound("sfx/rotate.wav"); // rotating block sfx
                 break;
             case KeyEvent.VK_SPACE:  //instant drop
                 while (gamePanel.getBoard().valid(gamePanel.getTetromino(), gamePanel.getTetromino().getX(), gamePanel.getTetromino().getY() + 1)) {

@@ -27,11 +27,11 @@ public class KeyInput extends KeyAdapter {
     //game over
     private void gameOverInput(int input) {
         if( input == KeyEvent.VK_ENTER) {
-            SFX.playSound("sfx/menu_SFX.wav");
+            SFX.playSound(SFX.SELECT_SFX);
             gamePanel.resetGame();
         }
         else if( input == KeyEvent.VK_ESCAPE) {
-            SFX.playSound("sfx/menu_SFX.wav");
+            SFX.playSound(SFX.SELECT_SFX);
             gamePanel.setCurrentState(GamePanel.GameState.MENU);
             gamePanel.setGameOver(false);
         }
@@ -41,19 +41,19 @@ public class KeyInput extends KeyAdapter {
     private void menuInput(int key) {
         int menuOption = gamePanel.getMenuOption();
         if (key == KeyEvent.VK_UP) {
-            SFX.playSound("sfx/menu_SFX.wav");
+            SFX.playSound(SFX.MOVE_SFX);
             menuOption--;
             if (menuOption < 0) menuOption = 3;
             gamePanel.setMenuOption(menuOption);
         }
         else if (key == KeyEvent.VK_DOWN) {
-            SFX.playSound("sfx/menu_SFX.wav");
+            SFX.playSound(SFX.MOVE_SFX);
             menuOption++;
             if (menuOption > 3) menuOption = 0;
             gamePanel.setMenuOption(menuOption);
         }
         else if (key == KeyEvent.VK_ENTER) {
-            SFX.playSound("sfx/menu_SFX.wav");
+            SFX.playSound(SFX.SELECT_SFX);
             if (menuOption == 0) gamePanel.resetGame();
             else if (menuOption == 1) {
                 if (gamePanel.getFallSpeed() == 30) { gamePanel.setFallSpeed(15); gamePanel.setDifficulty("HARD"); }
@@ -88,19 +88,19 @@ public class KeyInput extends KeyAdapter {
                 if (gamePanel.getBoard().valid(gamePanel.getTetromino(), x - 1, y)) {
                     gamePanel.getTetromino().move(-1, 0);
                 }
-                SFX.playSound("sfx/move.wav"); // rotating block sfx
+                SFX.playSound(SFX.MOVE_SFX);
                 break;
             case KeyEvent.VK_RIGHT:
                 if (gamePanel.getBoard().valid(gamePanel.getTetromino(), x + 1, y)) {
                     gamePanel.getTetromino().move(1, 0);
                 }
-                SFX.playSound("sfx/move.wav"); // rotating block sfx
+                SFX.playSound(SFX.MOVE_SFX);
                 break;
             case KeyEvent.VK_DOWN:
                 if (gamePanel.getBoard().valid(gamePanel.getTetromino(), x, y + 1)) {
                     gamePanel.getTetromino().move(0, 1);
                 }
-                SFX.playSound("sfx/move.wav"); // rotating block sfx
+                SFX.playSound(SFX.MOVE_SFX);
                 break;
             case KeyEvent.VK_UP:
                 if (gamePanel.getGameModeNumber() == 2) {
@@ -109,9 +109,10 @@ public class KeyInput extends KeyAdapter {
                 else {
                     gamePanel.rotateLogic();
                 }
-                SFX.playSound("sfx/rotate.wav"); // rotating block sfx
+                SFX.playSound(SFX.ROTATE_SFX); // rotating block sfx
                 break;
             case KeyEvent.VK_SPACE:  //instant drop
+                SFX.playSound(SFX.DROP_SFX);
                 while (gamePanel.getBoard().valid(gamePanel.getTetromino(), gamePanel.getTetromino().getX(), gamePanel.getTetromino().getY() + 1)) {
                     gamePanel.getTetromino().move(0, 1);
                 }
@@ -119,14 +120,17 @@ public class KeyInput extends KeyAdapter {
                 break;
         }
         if (input == KeyEvent.VK_ESCAPE) {
+            SFX.playSound(SFX.SELECT_SFX);
             gamePanel.setCurrentState(GamePanel.GameState.PAUSED);
         }
     }
 
     private void pausedInput(int input) {
         if (input == KeyEvent.VK_ENTER || input == KeyEvent.VK_BACK_SPACE) {
+            SFX.playSound(SFX.SELECT_SFX);
             gamePanel.setCurrentState(GamePanel.GameState.PLAYING);
         } else if (input == KeyEvent.VK_ESCAPE) {
+            SFX.playSound(SFX.SELECT_SFX);
             gamePanel.setCurrentState(GamePanel.GameState.MENU);
         }
     }

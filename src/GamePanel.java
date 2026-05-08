@@ -1,3 +1,4 @@
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
@@ -28,6 +29,8 @@ public class GamePanel extends JPanel implements Runnable {
     private int gameModeNumber = 0;
     private String modeName = "CLASSIC";
     Random random = new Random();
+    //sound 
+    private Clip themeClip;
 
     public GamePanel(){
         this.setBackground(Color.BLACK);
@@ -113,6 +116,11 @@ public class GamePanel extends JPanel implements Runnable {
         this.gameOver = false;
         this.currentState = GameState.PLAYING;
         this.potholeScore = 1000;
+
+        if (themeClip != null) {
+            SFX.stopSound(themeClip);
+        }
+        themeClip = SFX.playBGM(SFX.THEME_BGM);
     }
 
     @Override
@@ -138,6 +146,10 @@ public class GamePanel extends JPanel implements Runnable {
     public void update(){
         if(currentState == GameState.PLAYING && !gameOver) {
             gameLogic();
+        }
+        if (gameOver) {
+            SFX.stopSound(themeClip);
+            SFX.playSound(SFX.GAMEOVER_BGM);
         }
     }
 

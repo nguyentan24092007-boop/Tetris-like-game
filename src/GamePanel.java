@@ -30,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
     private String modeName = "CLASSIC";
     Random random = new Random();
     //sound 
-    private Clip themeClip;
+    public static Clip themeClip;
     private boolean gameOverSound = false;
 
     public GamePanel(){

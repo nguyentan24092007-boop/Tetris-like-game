@@ -122,6 +122,7 @@ public class KeyInput extends KeyAdapter {
         if (input == KeyEvent.VK_ESCAPE) {
             SFX.playSound(SFX.SELECT_SFX);
             gamePanel.setCurrentState(GamePanel.GameState.PAUSED);
+            SFX.pauseSound(GamePanel.themeClip);
         }
     }
 
@@ -129,6 +130,7 @@ public class KeyInput extends KeyAdapter {
         if (input == KeyEvent.VK_ENTER || input == KeyEvent.VK_BACK_SPACE) {
             SFX.playSound(SFX.SELECT_SFX);
             gamePanel.setCurrentState(GamePanel.GameState.PLAYING);
+            SFX.resumeSound(GamePanel.themeClip);
         } else if (input == KeyEvent.VK_ESCAPE) {
             SFX.playSound(SFX.SELECT_SFX);
             gamePanel.setCurrentState(GamePanel.GameState.MENU);
